@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistem Informasi Data Mahasiswa</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header Aplikasi Formal & Humanis -->
+    <header class="app-header">
+      <div class="brand-badge">
+        <svg class="badge-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 10v6M2 10l10-5 10 5-10 5z"/>
+          <path d="M6 12v5c3 3 9 3 12 0v-5"/>
+        </svg>
+        <span>Portal Akademik Mahasiswa</span>
+      </div>
+      <h1>Manajemen Data & Rekapitulasi Nilai</h1>
+      <p class="subtitle">Praktikum Mandiri: Implementasi Algoritma Percabangan, Perulangan, dan Manajemen State</p>
+    </header>
+
+    <!-- Kartu Ringkasan Metrik Statistik -->
+    <section class="stats-section" aria-label="Statistik Mahasiswa">
+      <div class="stat-card card-total">
+        <div class="stat-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+            <circle cx="9" cy="7" r="4"/>
+            <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+            <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-title">Total Mahasiswa</span>
+          <div class="stat-number-row">
+            <span class="stat-value" id="statTotal">0</span>
+            <span class="stat-unit">Orang</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card card-lulus">
+        <div class="stat-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+            <polyline points="22 4 12 14.01 9 11.01"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-title">Mahasiswa Lulus</span>
+          <div class="stat-number-row">
+            <span class="stat-value" id="statLulus">0</span>
+            <span class="stat-unit">Orang</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card card-belum">
+        <div class="stat-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <line x1="12" y1="8" x2="12" y2="12"/>
+            <line x1="12" y1="16" x2="12.01" y2="16"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-title">Belum Lulus</span>
+          <div class="stat-number-row">
+            <span class="stat-value" id="statBelumLulus">0</span>
+            <span class="stat-unit">Orang</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="stat-card card-rata">
+        <div class="stat-icon-wrapper">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 20V10"/>
+            <path d="M18 20V4"/>
+            <path d="M6 20v-4"/>
+          </svg>
+        </div>
+        <div class="stat-content">
+          <span class="stat-title">Rata-Rata Nilai</span>
+          <div class="stat-number-row">
+            <span class="stat-value" id="statRataRata">0.0</span>
+            <span class="stat-unit">Skor</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Tata Letak Konten Utama: Form & Tabel Data -->
+    <div class="main-grid">
+      <!-- Panel Formulir Input -->
+      <section class="card panel-form" aria-labelledby="form-heading">
+        <div class="panel-header">
+          <div class="panel-icon-circle">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <line x1="19" y1="8" x2="19" y2="14"/>
+              <line x1="22" y1="11" x2="16" y2="11"/>
+            </svg>
+          </div>
+          <div>
+            <h2 id="form-heading">Entri Mahasiswa</h2>
+            <p class="panel-subtitle">Isi data akademik mahasiswa di bawah ini</p>
+          </div>
+        </div>
+
+        <form id="formMahasiswa" novalidate>
+          <div class="form-group">
+            <label for="nama">Nama Lengkap</label>
+            <div class="input-container">
+              <input id="nama" type="text" placeholder="Masukkan nama mahasiswa..." required autocomplete="off">
+            </div>
+            <div class="field-error-msg" id="err-nama"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="nim">Nomor Induk Mahasiswa (NIM)</label>
+            <div class="input-container">
+              <input id="nim" type="text" placeholder="Contoh: 2310512001" required autocomplete="off">
+            </div>
+            <div class="field-error-msg" id="err-nim"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="prodi">Program Studi</label>
+            <div class="input-container">
+              <select id="prodi" required>
+                <option value="" disabled selected>Pilih Program Studi...</option>
+                <option value="Teknik Informatika">Teknik Informatika</option>
+                <option value="Sistem Informasi">Sistem Informasi</option>
+                <option value="Teknologi Informasi">Teknologi Informasi</option>
+                <option value="Sains Data">Sains Data</option>
+                <option value="Teknik Komputer">Teknik Komputer</option>
+                <option value="Rekayasa Perangkat Lunak">Rekayasa Perangkat Lunak</option>
+              </select>
+            </div>
+            <div class="field-error-msg" id="err-prodi"></div>
+          </div>
+
+          <div class="form-group">
+            <label for="nilai">Nilai Akhir (0 – 100)</label>
+            <div class="input-container">
+              <input id="nilai" type="number" min="0" max="100" placeholder="0 - 100" required>
+            </div>
+            <div class="field-error-msg" id="err-nilai"></div>
+            
+            <!-- Panduan Predikat Formal -->
+            <div class="predicate-guide" aria-label="Rentang Nilai Predikat">
+              <span class="guide-title">Standar Predikat:</span>
+              <div class="guide-badges">
+                <span class="guide-chip chip-a"><strong>A</strong> ≥ 85</span>
+                <span class="guide-chip chip-b"><strong>B</strong> 75–84</span>
+                <span class="guide-chip chip-c"><strong>C</strong> 60–74</span>
+                <span class="guide-chip chip-d"><strong>D</strong> &lt; 60</span>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" id="btnSubmit" class="btn btn-primary">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            <span>Simpan Data Mahasiswa</span>
+          </button>
+        </form>
+
+        <div id="pesan" class="alert-box" role="status" aria-live="polite"></div>
+      </section>
+
+      <!-- Panel Tabel Data & Rekapitulasi -->
+      <section class="card panel-table" aria-labelledby="table-heading">
+        <div class="table-action-header">
+          <div class="table-title-area">
+            <h2 id="table-heading">Daftar Mahasiswa Terdaftar</h2>
+            <p class="panel-subtitle">Daftar lengkap status kelulusan dan predikat nilai akademik</p>
+          </div>
+          <button type="button" id="btnReset" class="btn btn-secondary-danger" title="Hapus semua data dalam daftar">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/>
+            </svg>
+            <span>Kosongkan Daftar</span>
+          </button>
+        </div>
+
+        <div class="table-responsive-container">
+          <div id="tableScrollHint" class="table-scroll-hint">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+            </svg>
+            <span>Tabel dapat digulir ke samping untuk melihat seluruh data</span>
+          </div>
+          <table id="tabelMahasiswa">
+            <thead>
+              <tr>
+                <th class="col-no">No</th>
+                <th>Nama Mahasiswa</th>
+                <th>NIM</th>
+                <th>Program Studi</th>
+                <th>Nilai</th>
+                <th>Predikat</th>
+                <th>Status</th>
+                <th class="col-aksi">Aksi</th>
+              </tr>
+            </thead>
+            <tbody id="daftarMahasiswa">
+              <!-- Baris data di-generate dinamis oleh script.js -->
+            </tbody>
+          </table>
+
+          <!-- Tampilan Saat Daftar Masih Kosong -->
+          <div id="emptyState" class="empty-state">
+            <div class="empty-icon-box">
+              <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"/>
+              </svg>
+            </div>
+            <h3>Belum Ada Data Mahasiswa</h3>
+            <p>Silakan gunakan formulir di sisi kiri untuk menambahkan data mahasiswa baru ke dalam tabel sistem.</p>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+
+  <!-- Modal Konfirmasi Non-Blocking (Bebas Blokir Browser) -->
+  <div id="modalKonfirmasi" class="modal-backdrop" style="display: none;" role="dialog" aria-modal="true">
+    <div class="modal-card">
+      <div class="modal-icon">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="12" cy="12" r="10"/>
+          <line x1="12" y1="8" x2="12" y2="12"/>
+          <line x1="12" y1="16" x2="12.01" y2="16"/>
+        </svg>
+      </div>
+      <h3 id="modalJudul" class="modal-title">Konfirmasi Tindakan</h3>
+      <p id="modalPesan" class="modal-desc">Apakah Anda yakin ingin melanjutkan tindakan ini?</p>
+      <div class="modal-actions">
+        <button type="button" id="modalBtnBatal" class="btn btn-secondary">Batal</button>
+        <button type="button" id="modalBtnKonfirmasi" class="btn btn-danger">Lanjutkan</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
